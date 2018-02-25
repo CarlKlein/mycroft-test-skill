@@ -35,12 +35,14 @@ class TestSkill(MycroftSkill):
     #   'Hello world'
     #   'Howdy you great big world'
     #   'Greetings planet earth'
-    @intent_handler(IntentBuilder("").require("Hello").require("World"))
+    @intent_handler(IntentBuilder("").require("Group").require("Scene"))
     def handle_hello_world_intent(self, message):
         # In this case, respond by simply speaking a canned response.
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
-        self.speak_dialog("hello.world")
+        group = message.data["Group"]
+        scene = message.data["Scene"]
+        self.speak_dialog("setting.scene", data={"group": group, "scene": scene})
 
     @intent_handler(IntentBuilder("").require("Count").require("Dir"))
     def handle_count_intent(self, message):
